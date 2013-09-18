@@ -43,5 +43,5 @@ win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../TGUI_project/T
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../SFML_project/TGUI_install/lib/ -ltgui-d
 else:unix: LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../SFML_project/TGUI_install/lib/ -ltgui
 
-INCLUDEPATH += $$PWD/../../../../TGUI_project/TGUI_install/include $$PWD/../../../TGUI_project/SFML_install/include
-DEPENDPATH += $$PWD/../../../../TGUI_project/TGUI_install/include $$PWD/../../../TGUI_project/SFML_install/include
+INCLUDEPATH += $$PWD/../../../../TGUI_project/TGUI_install/include $$PWD/../../../TGUI_project/TGUI_install/include
+DEPENDPATH += $$PWD/../../../../TGUI_project/TGUI_install/include $$PWD/../../../TGUI_project/TGUI_install/include
