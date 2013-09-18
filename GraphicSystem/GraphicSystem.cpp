@@ -43,7 +43,7 @@ GraphicSystem::~GraphicSystem()
     m_gui->uncheckRadioButtons();
     m_gui->unfocusWidgets();
     m_gui->removeAllWidgets();
-    delete m_gui; // TODO WTF here?
+    delete m_gui; // TODO WTF in linux here?
     //m_window->close();
     delete m_window;
 }
