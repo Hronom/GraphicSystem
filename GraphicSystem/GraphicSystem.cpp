@@ -2,7 +2,7 @@
 
 #include <QDebug>
 
-GraphicSystem* GraphicSystem::m_instance = NULL;
+GraphicSystem* GraphicSystem::m_instance = 0;
 
 bool GraphicSystem::initialize()
 {
@@ -15,7 +15,7 @@ void GraphicSystem::shutdown()
 {
     qDebug()<<"Shutdown:"<<"GraphicSystem";
     delete m_instance;
-    m_instance = NULL;
+    m_instance = 0;
 }
 
 GraphicSystem* GraphicSystem::instance()

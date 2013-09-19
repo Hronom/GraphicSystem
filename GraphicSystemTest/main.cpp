@@ -1,5 +1,3 @@
-#include <QCoreApplication>
-
 #include "GraphicSystem.h"
 #include <QDebug>
 
@@ -7,6 +5,9 @@
 
 int main(int argc, char *argv[])
 {
+    Q_UNUSED(argc)
+    Q_UNUSED(argv)
+
     //////////////////////////////////////////////////////////////////
     /// Init GraphicSystem singleton
     GraphicSystem::initialize();
