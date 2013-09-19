@@ -26,13 +26,13 @@ GraphicSystem* GraphicSystem::instance()
 GraphicSystem::GraphicSystem()
 {
     m_window = new sf::RenderWindow();
-    m_window->create(sf::VideoMode(800, 600), "SFML Render Window");
+    m_window->create(sf::VideoMode(800, 600), "SFML Render Window"); // TODO make this like parameter
     //m_window->setVerticalSyncEnabled(true);
     m_window->setFramerateLimit(60);
 
     m_gui = new tgui::Gui((*m_window));
     // Load the font (you should check the return value to make sure that it is loaded)
-    m_gui->setGlobalFont("data/fonts/DejaVuSans.ttf");
+    m_gui->setGlobalFont("data/fonts/DejaVuSans.ttf"); // TODO make this like parameter
 
     m_backgroundColor = sf::Color::Black;
 }
@@ -44,7 +44,6 @@ GraphicSystem::~GraphicSystem()
     m_gui->unfocusWidgets();
     m_gui->removeAllWidgets();
     delete m_gui; // TODO WTF in linux here?
-    //m_window->close();
     delete m_window;
 }
 
@@ -52,8 +51,11 @@ void GraphicSystem::injectPreUpdate(const float &par_timeSinceLastUpdate)
 {
     Q_UNUSED(par_timeSinceLastUpdate);
 
-    // clear the window with black color
-    m_window->clear(m_backgroundColor);
+    if(m_window->isOpen())
+    {
+        // clear the window with black color
+        m_window->clear(m_backgroundColor);
+    }
 }
 
 void GraphicSystem::injectPostUpdate(const float &par_timeSinceLastUpdate)

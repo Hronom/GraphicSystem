@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
-CONFIG += ordered
-
 SUBDIRS += \
-    GraphicSystem
+    GraphicSystem \
+    GraphicSystemTest
+
+GraphicSystemTest.depends = GraphicSystem
