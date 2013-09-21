@@ -7,12 +7,14 @@ CONFIG += staticlib c++11
 
 SOURCES += \
     GraphicSystem.cpp \
-    Animation.cpp
+    Animation.cpp \
+    AnimatedSprite.cpp
 
 HEADERS += \
     GraphicSystem.h \
     Animation.h \
-    Frame.h
+    Frame.h \
+    AnimatedSprite.h
 
 # sfml-system
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../SFML_project/SFML_install/lib/ -L$$PWD/../../../SFML_project/SFML_install/lib/ -lsfml-system
