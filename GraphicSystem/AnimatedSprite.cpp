@@ -1,5 +1,14 @@
 #include "AnimatedSprite.h"
 
+#include "GraphicSystem.h"
+
+#include <QFile>
+#include <QFileInfo>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QDebug>
+
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -43,16 +52,57 @@ QList<QString> AnimatedSprite::animations()
     return m_animations.keys();
 }
 
-void AnimatedSprite::playAnimation(const QString &par_name, bool par_mirror)
+void AnimatedSprite::playAnimation(const QString &par_name, bool par_mirrorX, bool par_mirrorY)
 {
     QHash<QString, Animation>::Iterator iter;
     iter = m_animations.find(par_name);
 
     if(iter != m_animations.end())
     {
-        m_currentAnimation = &iter.value();
-        m_currentAnimation->resetAnimation();
+        Animation *newAnimation;
+        newAnimation = &iter.value();
+        if(m_currentAnimation != newAnimation)
+        {
+            m_currentAnimation = newAnimation;
+            m_currentAnimation->resetAnimation();
+
+            // scale
+            {
+                bool needScale = false;
+
+                float scaleX = 1.0f;
+                if( ( par_mirrorX && Transformable::getScale().x >= 0 ) ||
+                    ( ! par_mirrorX && Transformable::getScale().x <= 0 ) )
+                {
+                    scaleX = -1.0f;
+                    needScale = true;
+                }
+
+                float scaleY = 1.0f;
+                if( ( par_mirrorY && Transformable::getScale().y >= 0 ) ||
+                    ( ! par_mirrorY && Transformable::getScale().y <= 0 ) )
+                {
+                    scaleY = -1.0f;
+                    needScale = true;
+                }
+
+                if(needScale)
+                    Transformable::scale(scaleX, scaleY);
+            }
+        }
     }
+    else
+    {
+        qDebug()<<"Animation not found";
+    }
+}
+
+QString AnimatedSprite::getPlayAnimationName() const
+{
+    if(m_currentAnimation != 0)
+        return m_currentAnimation->getName();
+    else
+        return "";
 }
 
 sf::FloatRect AnimatedSprite::getLocalBounds() const
@@ -66,6 +116,81 @@ sf::FloatRect AnimatedSprite::getLocalBounds() const
 sf::FloatRect AnimatedSprite::getGlobalBounds() const
 {
     return sf::Transformable::getTransform().transformRect(getLocalBounds());
+}
+
+AnimatedSprite* AnimatedSprite::loadFromFile(const QString &par_fileName)
+{
+    QFile file(par_fileName);
+    if(!file.open(QIODevice::ReadOnly))
+        return 0;
+
+    QJsonDocument doc;
+    doc = QJsonDocument::fromJson(file.readAll());
+
+    file.close();
+
+    QJsonObject rootObject;
+    rootObject = doc.object();
+
+    QString textureFileName;
+    textureFileName = rootObject.value("texture_file").toString();
+
+    if(!textureFileName.isEmpty())
+    {
+        QFileInfo fileInfo;
+        fileInfo.setFile(file);
+
+        sf::Texture *texture;
+        texture = GraphicSystem::instance()->getTexture(fileInfo.absolutePath() + "/" + textureFileName);
+
+        AnimatedSprite *animatedSprite;
+        animatedSprite = new AnimatedSprite(texture);
+
+        QJsonArray animationsList;
+        animationsList = rootObject.value("animations").toArray();
+
+        for(int animationIndex = 0; animationIndex < animationsList.size(); ++animationIndex)
+        {
+            QJsonObject animationElem;
+            animationElem = animationsList.at(animationIndex).toObject();
+
+            QString animationName;
+            animationName = animationElem.value("name").toString("Unknown");
+
+            double framesDelay;
+            framesDelay = animationElem.value("frames_delay").toDouble();
+
+            bool repeatable;
+            repeatable = animationElem.value("repeatable").toBool();
+
+            Animation animation(animationName, framesDelay, repeatable);
+
+            QJsonArray framesList;
+            framesList = animationElem.value("frames").toArray();
+
+            for(int frameIndex = 0; frameIndex < framesList.size(); ++frameIndex)
+            {
+                QJsonObject frameElem;
+                frameElem = framesList.at(frameIndex).toObject();
+
+                Frame frame;
+                frame.rectangle.left = frameElem.value("x").toDouble();
+                frame.rectangle.top = frameElem.value("y").toDouble();
+                frame.rectangle.width = frameElem.value("width").toDouble();
+                frame.rectangle.height = frameElem.value("height").toDouble();
+                frame.origin.x = frameElem.value("origin_x").toDouble(frame.rectangle.left) - frame.rectangle.left;
+                frame.origin.y = frameElem.value("origin_y").toDouble(frame.rectangle.top + frame.rectangle.height) - frame.rectangle.top;
+
+                animation.addFrame(frame);
+            }
+
+            animatedSprite->addAnimation(animation.getName(), animation);
+        }
+
+        return animatedSprite;
+    }
+    else
+        return 0;
 }
 
 void AnimatedSprite::draw(sf::RenderTarget &par_target, sf::RenderStates par_states) const

@@ -28,10 +28,13 @@ public:
     void addAnimation(const QString &par_name, const Animation &par_animation);
     QList<QString> animations();
 
-    void playAnimation(const QString &par_name, bool par_mirror = false);
+    void playAnimation(const QString &par_name, bool par_mirrorX = false, bool par_mirrorY = false);
+    QString getPlayAnimationName() const;
 
     sf::FloatRect getLocalBounds() const;
     sf::FloatRect getGlobalBounds() const;
+
+    static AnimatedSprite* loadFromFile(const QString &par_fileName);
 
 private:
     virtual void draw(sf::RenderTarget &par_target, sf::RenderStates par_states) const;
