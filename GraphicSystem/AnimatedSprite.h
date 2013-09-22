@@ -16,8 +16,8 @@ private:
     sf::IntRect m_textureRect; // Rectangle defining the area of the source texture to display
     sf::Vertex m_vertices[4]; // Vertices defining the sprite's geometry
 
-    Animation *m_currentAnimation;
     QHash<QString, Animation> m_animations;
+    Animation *m_currentAnimation;
 
 public:
     AnimatedSprite(sf::Texture *par_texture);
@@ -30,6 +30,7 @@ public:
 
     void playAnimation(const QString &par_name, bool par_mirrorX = false, bool par_mirrorY = false);
     QString getPlayAnimationName() const;
+    bool isPlayAnimationMirrored() const;
 
     sf::FloatRect getLocalBounds() const;
     sf::FloatRect getGlobalBounds() const;

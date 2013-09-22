@@ -72,7 +72,7 @@ void AnimatedSprite::playAnimation(const QString &par_name, bool par_mirrorX, bo
 
                 float scaleX = 1.0f;
                 if( ( par_mirrorX && Transformable::getScale().x >= 0 ) ||
-                    ( ! par_mirrorX && Transformable::getScale().x <= 0 ) )
+                        ( ! par_mirrorX && Transformable::getScale().x <= 0 ) )
                 {
                     scaleX = -1.0f;
                     needScale = true;
@@ -80,7 +80,7 @@ void AnimatedSprite::playAnimation(const QString &par_name, bool par_mirrorX, bo
 
                 float scaleY = 1.0f;
                 if( ( par_mirrorY && Transformable::getScale().y >= 0 ) ||
-                    ( ! par_mirrorY && Transformable::getScale().y <= 0 ) )
+                        ( ! par_mirrorY && Transformable::getScale().y <= 0 ) )
                 {
                     scaleY = -1.0f;
                     needScale = true;
@@ -103,6 +103,14 @@ QString AnimatedSprite::getPlayAnimationName() const
         return m_currentAnimation->getName();
     else
         return "";
+}
+
+bool AnimatedSprite::isPlayAnimationMirrored() const
+{
+    if(Transformable::getScale().x <= 0 || Transformable::getScale().y <= 0)
+        return true;
+    else
+        return false;
 }
 
 sf::FloatRect AnimatedSprite::getLocalBounds() const
