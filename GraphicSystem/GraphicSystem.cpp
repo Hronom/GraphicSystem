@@ -4,18 +4,33 @@
 
 GraphicSystem* GraphicSystem::m_instance = 0;
 
-bool GraphicSystem::initialize()
+bool GraphicSystem::initialize(const QString &par_windowTitle, const QString &par_fontPath)
 {
-    qDebug()<<"Initialize:"<<"GraphicSystem";
-    m_instance = new GraphicSystem();
-    return true;
+    if(m_instance == 0)
+    {
+        qDebug()<<"Initialize:"<<"GraphicSystem";
+        m_instance = new GraphicSystem(par_windowTitle, par_fontPath);
+        return true;
+    }
+    else
+    {
+        qDebug()<<"GraphicSystem already initialized";
+        return false;
+    }
 }
 
 void GraphicSystem::shutdown()
 {
-    qDebug()<<"Shutdown:"<<"GraphicSystem";
-    delete m_instance;
-    m_instance = 0;
+    if(m_instance == 0)
+    {
+        qDebug()<<"Shutdown:"<<"GraphicSystem";
+        delete m_instance;
+        m_instance = 0;
+    }
+    else
+    {
+        qDebug()<<"GraphicSystem not initialized or already destroyed";
+    }
 }
 
 GraphicSystem* GraphicSystem::instance()
@@ -23,16 +38,19 @@ GraphicSystem* GraphicSystem::instance()
     return m_instance;
 }
 
-GraphicSystem::GraphicSystem()
+GraphicSystem::GraphicSystem(const QString &par_windowTitle, const QString &par_fontPath)
 {
+    sf::String windowTitle(par_windowTitle.toStdWString());
+    sf::String fontPath(par_fontPath.toStdWString());
+
     m_window = new sf::RenderWindow();
-    m_window->create(sf::VideoMode(800, 600), "SFML Render Window"); // TODO make this like parameter
+    m_window->create(sf::VideoMode(800, 600), windowTitle); // TODO make this like parameter
     //m_window->setVerticalSyncEnabled(true);
     m_window->setFramerateLimit(60);
 
     m_gui = new tgui::Gui((*m_window));
     // Load the font (you should check the return value to make sure that it is loaded)
-    m_gui->setGlobalFont("data/fonts/DejaVuSans.ttf"); // TODO make this like parameter
+    m_gui->setGlobalFont(fontPath);
 
     m_backgroundColor = sf::Color::Black;
 }

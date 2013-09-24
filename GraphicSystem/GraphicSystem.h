@@ -13,6 +13,9 @@ class GraphicSystem
 private:
     static GraphicSystem* m_instance;
 
+    QString m_windowTitle;
+    QString m_fontPath;
+
     sf::RenderWindow *m_window;
     tgui::Gui *m_gui;
 
@@ -21,12 +24,12 @@ private:
     QHash<QString, sf::Texture*> m_textures;
 
 public:
-    static bool initialize();
+    static bool initialize(const QString &par_windowTitle, const QString &par_fontPath);
     static void shutdown();
     static GraphicSystem* instance();
 
 private:
-    GraphicSystem();
+    GraphicSystem(const QString &par_windowTitle, const QString &par_fontPath);
     ~GraphicSystem();
 
 public:
