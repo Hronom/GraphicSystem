@@ -21,7 +21,7 @@ bool GraphicSystem::initialize(const QString &par_windowTitle, const QString &pa
 
 void GraphicSystem::shutdown()
 {
-    if(m_instance == 0)
+    if(m_instance != 0)
     {
         qDebug()<<"Shutdown:"<<"GraphicSystem";
         delete m_instance;
