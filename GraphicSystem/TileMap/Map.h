@@ -23,7 +23,7 @@ private:
 
     QHash<QString, QString> m_properties;
 
-    QList<MapTile> m_mapTiles;
+    QList<QList<MapTile>> m_mapTiles;
 
 public:
     Map();
