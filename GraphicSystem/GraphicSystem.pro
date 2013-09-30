@@ -5,16 +5,24 @@ TARGET = GraphicSystem
 TEMPLATE = lib
 CONFIG += staticlib c++11
 
-SOURCES += \
-    GraphicSystem.cpp \
-    Animation.cpp \
-    AnimatedSprite.cpp
-
 HEADERS += \
     GraphicSystem.h \
-    Animation.h \
-    Frame.h \
-    AnimatedSprite.h
+    Animation/Frame.h \
+    Animation/Animation.h \
+    Animation/AnimatedSprite.h \
+    TileMap/MapTile.h \
+    TileMap/MapLoader.h \
+    TileMap/Map.h \
+    TileMap/TileLayer.h
+
+SOURCES += \
+    GraphicSystem.cpp \
+    Animation/Animation.cpp \
+    Animation/AnimatedSprite.cpp \
+    TileMap/MapTile.cpp \
+    TileMap/MapLoader.cpp \
+    TileMap/Map.cpp \
+    TileMap/TileLayer.cpp
 
 # sfml-system
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../SFML_project/SFML_install/lib/ -L$$PWD/../../../SFML_project/SFML_install/lib/ -lsfml-system
