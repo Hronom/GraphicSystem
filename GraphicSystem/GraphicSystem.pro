@@ -49,9 +49,9 @@ INCLUDEPATH += $$PWD/../../../../SFML_project/SFML_install/include $$PWD/../../.
 DEPENDPATH += $$PWD/../../../../SFML_project/SFML_install/include $$PWD/../../../SFML_project/SFML_install/include
 
 # TGUI
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../SFML_project/TGUI_install/lib/ -ltgui
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../SFML_project/TGUI_install/lib/ -ltgui-d
-else:unix: LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../SFML_project/TGUI_install/lib/ -ltgui
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../TGUI_project/TGUI_install/lib/ -ltgui
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../TGUI_project/TGUI_install/lib/ -ltgui-d
+else:unix: LIBS += -L$$PWD/../../../../TGUI_project/TGUI_install/lib/ -L$$PWD/../../../TGUI_project/TGUI_install/lib/ -ltgui
 
 INCLUDEPATH += $$PWD/../../../../TGUI_project/TGUI_install/include $$PWD/../../../TGUI_project/TGUI_install/include
 DEPENDPATH += $$PWD/../../../../TGUI_project/TGUI_install/include $$PWD/../../../TGUI_project/TGUI_install/include
