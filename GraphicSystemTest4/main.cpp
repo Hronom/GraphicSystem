@@ -17,9 +17,6 @@ int main(int argc, char **argv)
     SFMLEngine *engine;
     engine = new SFMLEngine();
 
-    /*MyQmlGUIWin *qmlGui;
-    qmlGui = new MyQmlGUIWin(800, 600);*/
-
     sf::Font font;
     font.loadFromFile("data/fonts/DejaVuSans.ttf");
 
@@ -46,15 +43,10 @@ int main(int argc, char **argv)
 
     engine->saveOnHDD();
 
-    /*
-    qmlGui->rootContext()->setContextProperty("SFMLEngine_instance", engine);
-    qmlGui->setSource(QUrl::fromLocalFile("data/QML/test.qml"));
-    qmlGui->show();*/
 
     int returnCode;
     //returnCode = app->exec();
 
-    //delete qmlGui;
     delete app;
 
     return 0;

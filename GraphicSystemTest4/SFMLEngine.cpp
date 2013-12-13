@@ -12,19 +12,8 @@ SFMLEngine::SFMLEngine(): QObject(0)
     qmlRegisterType<SFMLItem>("SFML", 1, 0, "SFMLItem");
     qmlRegisterType<SFMLEngine>("SFML", 1, 0, "SFMLEngine");   
 
-    /*sf::ContextSettings settings;
-    settings.depthBits = 24;
-    settings.stencilBits = 8;
-    settings.antialiasingLevel = 4;
-    settings.majorVersion = 3;
-    settings.minorVersion = 0;*/
-
     QSurfaceFormat surfaceFormat;
-    surfaceFormat.setDepthBufferSize(24);
-    surfaceFormat.setStencilBufferSize(8);
     surfaceFormat.setRenderableType(QSurfaceFormat::OpenGL);
-    /*surfaceFormat.setMajorVersion(3);
-    surfaceFormat.setMinorVersion(0);*/
 
     m_surface = new QOffscreenSurface();
     m_surface->create();
@@ -68,13 +57,6 @@ void SFMLEngine::display()
 
 sf::Vector2u SFMLEngine::getSize() const
 {
-    /*QSize textureSize;
-    textureSize = m_fbo->size();
-
-    sf::Vector2u size;
-    size.x = textureSize.width();
-    size.y = textureSize.height();*/
-
     qDebug()<<"SFMLEngine::getSize";
 
     sf::Vector2u size;
