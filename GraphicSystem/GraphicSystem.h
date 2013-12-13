@@ -24,12 +24,12 @@ private:
     QHash<QString, sf::Texture*> m_textures;
 
 public:
-    static bool initialize(const QString &par_windowTitle, const QString &par_fontPath);
+    static bool initialize(const QString &par_windowTitle, const QString &par_fontPath, sf::WindowHandle par_handle = 0);
     static void shutdown();
     static GraphicSystem* instance();
 
 private:
-    GraphicSystem(const QString &par_windowTitle, const QString &par_fontPath);
+    GraphicSystem(const QString &par_windowTitle, const QString &par_fontPath, sf::WindowHandle par_handle);
     ~GraphicSystem();
 
 public:

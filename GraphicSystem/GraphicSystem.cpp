@@ -4,12 +4,12 @@
 
 GraphicSystem* GraphicSystem::m_instance = 0;
 
-bool GraphicSystem::initialize(const QString &par_windowTitle, const QString &par_fontPath)
+bool GraphicSystem::initialize(const QString &par_windowTitle, const QString &par_fontPath, sf::WindowHandle par_handle)
 {
     if(m_instance == 0)
     {
         qDebug()<<"Initialize:"<<"GraphicSystem";
-        m_instance = new GraphicSystem(par_windowTitle, par_fontPath);
+        m_instance = new GraphicSystem(par_windowTitle, par_fontPath, par_handle);
         return true;
     }
     else
@@ -38,13 +38,19 @@ GraphicSystem* GraphicSystem::instance()
     return m_instance;
 }
 
-GraphicSystem::GraphicSystem(const QString &par_windowTitle, const QString &par_fontPath)
+GraphicSystem::GraphicSystem(const QString &par_windowTitle, const QString &par_fontPath, sf::WindowHandle par_handle)
 {
     sf::String windowTitle(par_windowTitle.toStdWString());
     sf::String fontPath(par_fontPath.toStdWString());
 
-    m_window = new sf::RenderWindow();
-    m_window->create(sf::VideoMode(800, 600), windowTitle); // TODO make this like parameter
+    if(par_handle != 0)
+        m_window = new sf::RenderWindow(par_handle);
+    else
+    {
+        m_window = new sf::RenderWindow();
+        m_window->create(sf::VideoMode(800, 600), windowTitle); // TODO make this like parameter
+    }
+
     //m_window->setVerticalSyncEnabled(true);
     m_window->setFramerateLimit(60);
 

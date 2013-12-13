@@ -1,4 +1,5 @@
 #include "GraphicSystem.h"
+
 #include <QDebug>
 
 #define THEME_CONFIG_FILE "data/widgets/Black.conf"
