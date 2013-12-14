@@ -16,6 +16,8 @@ private:
     QOpenGLContext *m_sfmlContext;
     QOpenGLFramebufferObject *m_fbo;
 
+    sf::Vector2u m_size;
+
 public:
     SFMLEngine();
     ~SFMLEngine();

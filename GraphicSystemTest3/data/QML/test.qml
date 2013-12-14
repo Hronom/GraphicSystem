@@ -1,11 +1,35 @@
 import QtQuick 2.0
+import SFML 1.0
 
 Item
 {
-
     width: 320
     height: 480
     transformOrigin: Item.Center
+
+    Rectangle
+    {
+        x: 5
+        y: 5
+        width: 100
+        height: 100
+        color: Qt.rgba(1, 1, 1, 0.7)
+        radius: 10
+        border.width: 1
+        border.color: "#0e95d3"
+        anchors.margins: -10
+
+        SFMLItem
+        {
+            id: xSFMLItem
+            anchors.rightMargin: 5
+            anchors.leftMargin: 5
+            anchors.bottomMargin: 5
+            anchors.topMargin: 5
+
+            sfmlEngine: SFMLEngine_instance
+        }
+    }
 
     Rectangle
     {
@@ -31,7 +55,7 @@ Item
             anchors.topMargin: 5
             anchors.fill: parent
             anchors.margins: 20
-    }
+        }
     }
 
     GridView {
@@ -103,8 +127,8 @@ Item
                 color: "#e00202"
                 text: qsTr("Text")
                 anchors.fill: parent
-            font.pixelSize: 12
-        }
+                font.pixelSize: 12
+            }
         }
     }
 }

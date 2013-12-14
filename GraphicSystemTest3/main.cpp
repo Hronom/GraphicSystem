@@ -1,35 +1,53 @@
-#include "CQmlGui.h"
-#include "Test.h"
+#include "MyQmlGUIWin.h"
+
+#include "SFMLItem.h"
+#include "SFMLEngine.h"
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
+#include <QQmlContext>
 #include <QApplication>
 #include <QDebug>
-#include <QOffscreenSurface>
+
 
 int main(int argc, char **argv)
 {
-    Q_UNUSED(argc)
-    Q_UNUSED(argv)
-
     QApplication *app;
     app = new QApplication(argc, argv);
 
-    Test *test;
-    test = new Test();
+    SFMLEngine *engine;
+    engine = new SFMLEngine();
 
-    CQmlGui *qmlGui;
-    qmlGui = new CQmlGui("data/QML/test.qml", 800, 600, QWindow::fromWinId(test->getWinID()));
-    qmlGui->show();
+    sf::Font font;
+    font.loadFromFile("data/fonts/DejaVuSans.ttf");
 
-    qmlGui->connect(qmlGui, SIGNAL(beforeSynchronizing()), test, SLOT(paintSFML()), Qt::DirectConnection);
+    sf::Text text;
+    text.setFont(font);
+    text.setString("Hello world");
+    text.setCharacterSize(24);
+    text.setColor(sf::Color::Red);
+    text.setStyle(sf::Text::Bold | sf::Text::Underlined);
 
-    while(test->update())
-        continue;
+    sf::CircleShape shape(50);
+    shape.setFillColor(sf::Color(150, 50, 250));
+    shape.setRadius(40);
+    shape.setPosition(100, 100);
 
-    /*int returnCode;
-    returnCode = app->exec();*/
+    // set a 10-pixel wide orange outline
+    shape.setOutlineThickness(10);
+    shape.setOutlineColor(sf::Color(250, 150, 100));
 
-    delete qmlGui;
-    delete test;
+    engine->clear();
+    engine->draw(text);
+    engine->draw(shape);
+    engine->display();
 
-    //return returnCode;
+    engine->saveOnHDD();
+
+
+    int returnCode;
+    //returnCode = app->exec();
+
+    delete app;
+
     return 0;
 }

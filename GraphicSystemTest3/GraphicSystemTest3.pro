@@ -1,4 +1,4 @@
-QT       += core widgets qml quick
+QT += core widgets qml quick
 
 TARGET = GraphicSystemTest3
 TEMPLATE = app
@@ -6,11 +6,15 @@ CONFIG += c++11
 CONFIG -= app_bundle
 
 HEADERS += \
-    CQmlGui.h \
-    Test.h
+    SFMLItem.h \
+    MyQmlGUIWin.h \
+    SFMLNode.h \
+    SFMLEngine.h
 SOURCES += main.cpp \
-    CQmlGui.cpp \
-    Test.cpp
+    SFMLItem.cpp \
+    MyQmlGUIWin.cpp \
+    SFMLNode.cpp \
+    SFMLEngine.cpp
 
 # installs things
 install_data_to_pwd.path = $$OUT_PWD
